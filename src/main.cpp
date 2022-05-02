@@ -6,6 +6,9 @@
 #include <vector>
 
 int main(int argc, char* argv[]) {
+
+    srand(time(NULL));
+
     // size of the window
     static int win = 700;
 
@@ -68,12 +71,24 @@ int main(int argc, char* argv[]) {
                 }
             }
         }
-
-        pause_game(paused, rend);
+        if (paused) {
+            pause_game(rend);
+        } else {
+            int fruit_generator = rand() % 1000;
+            if (fruit_generator == 1) {
+                fruits.push_back(create_fruit());
+            }
+            for (int i = 0; i < fruits.size(); i++) {
+                SDL_SetRenderDrawColor(rend, 255, 255, 255, 0);
+                SDL_RenderFillRect(rend, &fruits[i].fruit);
+            }
+        }
 
         SDL_RenderPresent(rend);
 
         SDL_Delay(1000 / 60);
+
+        std::cout << fruits.size();
     }
 
     SDL_DestroyRenderer(rend);
