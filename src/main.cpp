@@ -26,6 +26,9 @@ int main(int argc, char* argv[]) {
     // vector containing all of the fruit
     std::vector<Fruit> fruits;
 
+    // the snake
+    Snake snake;
+
     // bool to keep game running
     bool close = false;
 
@@ -47,20 +50,28 @@ int main(int argc, char* argv[]) {
             case SDL_KEYDOWN:
                 switch (e.key.keysym.scancode) {
                 case SDL_SCANCODE_W:
+                    snake.move_up();
                     break;
                 case SDL_SCANCODE_UP:
+                    snake.move_up();
                     break;
                 case SDL_SCANCODE_S:
+                    snake.move_down();
                     break;
                 case SDL_SCANCODE_DOWN:
+                    snake.move_down();
                     break;
                 case SDL_SCANCODE_D:
+                    snake.move_right();
                     break;
                 case SDL_SCANCODE_RIGHT:
+                    snake.move_right();
                     break;
                 case SDL_SCANCODE_A:
+                    snake.move_left();
                     break;
                 case SDL_SCANCODE_LEFT:
+                    snake.move_left();
                     break;
                 case SDL_SCANCODE_TAB:
                     paused = !paused;
@@ -71,10 +82,16 @@ int main(int argc, char* argv[]) {
                 }
             }
         }
+
+        SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
+        SDL_RenderClear(rend);
+
         if (paused) {
+            // if the game is paused, nothing happens but the pause
             pause_game(rend);
         } else {
-            int fruit_generator = rand() % 1000;
+            // code to generate and print fruit
+            int fruit_generator = rand() % 100;
             if (fruit_generator == 1) {
                 fruits.push_back(create_fruit());
             }
@@ -82,11 +99,18 @@ int main(int argc, char* argv[]) {
                 SDL_SetRenderDrawColor(rend, 255, 255, 255, 0);
                 SDL_RenderFillRect(rend, &fruits[i].fruit);
             }
+
+            // code to print and move the snake
+            snake.move_snake();
+            for (int i  = 0; i < snake.snake.size(); i++) {
+                SDL_SetRenderDrawColor(rend, 255, 255, 255, 0);
+                SDL_RenderFillRect(rend, &snake.snake[i]);
+            }
         }
 
         SDL_RenderPresent(rend);
 
-        SDL_Delay(1000 / 60);
+        SDL_Delay(1000 / 30);
 
         std::cout << fruits.size();
     }
