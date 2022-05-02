@@ -8,7 +8,7 @@ CXXFLAGS += -std=c++11 -O2 -g -Wall -Wpedantic
 
 LDLIBS += 
 
-LDFLAGS += -lSDL2 
+LDFLAGS += -lSDL2
 
 CC := g++
 
