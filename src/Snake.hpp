@@ -25,4 +25,7 @@ public:
 
     // eats a fruit
     void extend_snake();
+
+    // checks if the snake has run into itself
+    bool snake_died();
 };

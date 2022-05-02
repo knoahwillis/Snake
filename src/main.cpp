@@ -35,6 +35,9 @@ int main(int argc, char* argv[]) {
     // bool to pause the game
     bool paused = false;
 
+    // bool to end the game if you lose
+    bool game_over = false;
+
     while (!close) {
         SDL_Event e;
 
@@ -86,10 +89,10 @@ int main(int argc, char* argv[]) {
         SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
         SDL_RenderClear(rend);
 
-        if (paused) {
+        if (paused && !game_over) {
             // if the game is paused, nothing happens but the pause
             pause_game(rend);
-        } else {
+        } else if (!game_over) {
             // code to generate and print fruit
             int fruit_generator = rand() % 100;
             if (fruit_generator == 1) {
@@ -102,12 +105,23 @@ int main(int argc, char* argv[]) {
 
             // code to print and move the snake
             snake.move_snake();
-            for (int i  = 0; i < snake.snake.size(); i++) {
+            for (int i = 0; i < snake.snake.size(); i++) {
                 SDL_SetRenderDrawColor(rend, 255, 255, 255, 0);
                 SDL_RenderFillRect(rend, &snake.snake[i]);
+                for (int j = 0; j < fruits.size(); j++) {
+                    if (snake.snake[i].x < fruits[j].fruit.x + fruits[j].fruit.w && snake.snake[i].x + snake.snake[i].w > fruits[j].fruit.x &&
+                        snake.snake[i].y < fruits[j].fruit.y + fruits[j].fruit.h && snake.snake[i].y + snake.snake[i].h > fruits[j].fruit.y) {
+                        snake.extend_snake();
+                        fruits.erase(fruits.begin() + j);
+                    }
+                }
             }
+            game_over = snake.snake_died();
+        } else {
+            SDL_Rect end_game{350, 350, 300, 300};
+            SDL_SetRenderDrawColor(rend, 255, 0, 0, 0);
+            SDL_RenderFillRect(rend, &end_game);
         }
-
         SDL_RenderPresent(rend);
 
         SDL_Delay(1000 / 30);
