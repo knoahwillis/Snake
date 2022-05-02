@@ -22,3 +22,11 @@ void pause_game(SDL_Renderer* rend) {
     SDL_RenderFillRect(rend, &pause1);
     SDL_RenderFillRect(rend, &pause2);
 }
+
+// checks for a collision
+bool collision(SDL_Rect pos1, SDL_Rect pos2) {
+    if (pos1.x < pos2.x + pos2.w && pos1.x + pos1.w > pos2.x && pos1.y < pos2.y + pos2.h && pos1.y + pos1.h > pos2.y) {
+        return true;
+    }
+    return false;
+}

@@ -10,6 +10,9 @@ public:
     // snake itself (queue of rects, moving forward pops the last rect and adds a new one in front of it)
     std::vector<SDL_Rect> snake;
 
+    // boolean to see if snake has died
+    bool died = false;
+
     // creates snake in the middle of the board
     Snake();
     ~Snake();
@@ -27,5 +30,5 @@ public:
     void extend_snake();
 
     // checks if the snake has run into itself
-    bool snake_died();
+    void snake_died();
 };

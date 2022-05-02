@@ -93,7 +93,7 @@ int main(int argc, char* argv[]) {
             // if the game is paused, nothing happens but the pause
             pause_game(rend);
         } else if (!game_over) {
-            // code to generate and print fruit
+            // code to generate and render fruit
             int fruit_generator = rand() % 100;
             if (fruit_generator == 1) {
                 fruits.push_back(create_fruit());
@@ -103,7 +103,7 @@ int main(int argc, char* argv[]) {
                 SDL_RenderFillRect(rend, &fruits[i].fruit);
             }
 
-            // code to print and move the snake
+            // code to render and move the snake
             snake.move_snake();
             for (int i = 0; i < snake.snake.size(); i++) {
                 SDL_SetRenderDrawColor(rend, 255, 255, 255, 0);
@@ -116,7 +116,7 @@ int main(int argc, char* argv[]) {
                     }
                 }
             }
-            game_over = snake.snake_died();
+            game_over = snake.died;
         } else {
             SDL_Rect end_game{350, 350, 300, 300};
             SDL_SetRenderDrawColor(rend, 255, 0, 0, 0);
@@ -125,8 +125,6 @@ int main(int argc, char* argv[]) {
         SDL_RenderPresent(rend);
 
         SDL_Delay(1000 / 30);
-
-        std::cout << fruits.size();
     }
 
     SDL_DestroyRenderer(rend);
