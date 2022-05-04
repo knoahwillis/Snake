@@ -4,38 +4,38 @@
 
 Snake::Snake() {
     snake.push_back(SDL_Rect{350, 350, 10, 10});
-    snake.push_back(SDL_Rect{340, 350, 10, 10});
-    snake.push_back(SDL_Rect{330, 350, 10, 10});
-    snake.push_back(SDL_Rect{320, 350, 10, 10});
-    snake.push_back(SDL_Rect{310, 350, 10, 10});
+    snake.push_back(SDL_Rect{360, 350, 10, 10});
+    snake.push_back(SDL_Rect{370, 350, 10, 10});
+    snake.push_back(SDL_Rect{380, 350, 10, 10});
+    snake.push_back(SDL_Rect{390, 350, 10, 10});
 }
 
 Snake::~Snake() {}
 
 void Snake::move_right() {
-    if (move == -1) {
-        died = true;
-    }
+    // if (move == -1) {
+    //     died = true;
+    // }
     move = 1;
 }
 
 void Snake::move_left() {
     if (move == 1) {
-        died = true;
+        // died = true;
     }
     move = -1;
 }
 
 void Snake::move_up() {
     if (move == 2) {
-        died = true;
+        // died = true;
     }
     move = -2;
 }
 
 void Snake::move_down() {
     if (move == -2) {
-        died = true;
+        // died = true;
     }
     move = 2;
 }
@@ -43,24 +43,22 @@ void Snake::move_down() {
 void Snake::move_snake() {
     SDL_Rect next_pos = snake.back();
     if (move == 1 || move == -1) {
-        next_pos.x += move * 5;
+        next_pos.x += move * 10;
     } else {
-        next_pos.y += (move / 2) * 5;
+        next_pos.y += (move / 2) * 10;
     }
     snake.erase(snake.begin());
     snake.push_back(next_pos);
 }
 
 void Snake::extend_snake() {
-    for (int i = 0; i < 5; i++) {
-        SDL_Rect next_pos = snake.back();
-        if (move == 1 || move == -1) {
-            next_pos.x += move * 5;
-        } else {
-            next_pos.y += (move / 2) * 5;
-        }
-        snake.insert(snake.begin(), next_pos);
+    SDL_Rect next_pos = snake.back();
+    if (move == 1 || move == -1) {
+        next_pos.x += move * 10;
+    } else {
+        next_pos.y += (move / 2) * -10;
     }
+    snake.insert(snake.begin(), next_pos);
 }
 
 void Snake::snake_died() {

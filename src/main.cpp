@@ -116,6 +116,7 @@ int main(int argc, char* argv[]) {
                     }
                 }
             }
+            snake.snake_died();
             game_over = snake.died;
         } else {
             SDL_Rect end_game{350, 350, 300, 300};
@@ -124,7 +125,7 @@ int main(int argc, char* argv[]) {
         }
         SDL_RenderPresent(rend);
 
-        SDL_Delay(1000 / 30);
+        SDL_Delay(1000 / 15);
     }
 
     SDL_DestroyRenderer(rend);

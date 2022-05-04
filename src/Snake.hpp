@@ -4,7 +4,7 @@
 
 class Snake {
     // direction of movement (1 for right, -1 for left, -2 for up, 2 for down)
-    int move = 1;
+    int move = 2;
 
 public:
     // snake itself (queue of rects, moving forward pops the last rect and adds a new one in front of it)
